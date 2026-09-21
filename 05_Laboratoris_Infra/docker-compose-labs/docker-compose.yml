@@ -1,0 +1,40 @@
+version: '3.8'
+
+# Entorn de Laboratoris Vulnerables per a la Docència de Hacking Web (Mòdul 5023)
+# Desplega DVWA, OWASP Juice Shop i bWAPP
+
+services:
+  # 1. Damn Vulnerable Web Application (DVWA)
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    container_name: lab-dvwa
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    networks:
+      - labs-network
+
+  # 2. OWASP Juice Shop (App moderna en Node/Angular)
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: lab-juice-shop
+    ports:
+      - "8082:3000"
+    restart: unless-stopped
+    networks:
+      - labs-network
+
+  # 3. bWAPP (Buggy Web Application)
+  bwapp:
+    image: raesene/bwapp:latest
+    container_name: lab-bwapp
+    ports:
+      - "8083:80"
+    restart: unless-stopped
+    networks:
+      - labs-network
+
+networks:
+  labs-network:
+    name: ciber-labs-net
+    driver: bridge
